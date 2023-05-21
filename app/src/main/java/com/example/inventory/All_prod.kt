@@ -1,6 +1,6 @@
 package com.example.inventory
 
-data class Items(
+data class All_prod(
     val available_qty: Int,
     val id: Int,
     val img_link: String,

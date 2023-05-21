@@ -9,5 +9,14 @@
         android:id="@+id/inventory"
         android:name="com.example.inventory.Inventory"
         android:label="fragment_inventory"
-        tools:layout="@layout/fragment_inventory" />
+        tools:layout="@layout/fragment_inventory" >
+        <action
+            android:id="@+id/action_inventory_to_transaction"
+            app:destination="@id/transaction" />
+    </fragment>
+    <fragment
+        android:id="@+id/transaction"
+        android:name="com.example.inventory.Transaction"
+        android:label="fragment_transaction"
+        tools:layout="@layout/fragment_transaction" />
 </navigation>

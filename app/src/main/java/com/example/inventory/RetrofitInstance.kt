@@ -5,12 +5,11 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitInstance {
 
-    val api: InvenApi by lazy {
+    val api: Api by lazy {
         Retrofit.Builder()
-            .baseUrl("http://10.252.244.24:5000/")
+            .baseUrl("http://10.252.246.219:5000/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(InvenApi::class.java)
+            .create(Api::class.java)
     }
-
 }

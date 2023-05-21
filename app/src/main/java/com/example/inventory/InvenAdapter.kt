@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.inventory.databinding.ListItemBinding
-import com.google.android.material.imageview.ShapeableImageView
 
 class InvenAdapter(): RecyclerView.Adapter<InvenAdapter.MyViewHolder>() {
 
@@ -24,6 +23,8 @@ class InvenAdapter(): RecyclerView.Adapter<InvenAdapter.MyViewHolder>() {
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentItem = prodList[position]
 //        holder.nameprod.setImageResource(currentItem.img_link)
+
+
         holder.nameprod.text = currentItem.name
         holder.availqty.text = currentItem.available_qty.toString()
         holder.orderqty.text = currentItem.ordered_qty.toString()
@@ -42,17 +43,17 @@ class InvenAdapter(): RecyclerView.Adapter<InvenAdapter.MyViewHolder>() {
     }
 
 //    tambahan belum paham
-    private val diffCallback = object : DiffUtil.ItemCallback<Items>(){
-        override fun areItemsTheSame(oldItem: Items, newItem: Items): Boolean {
+    private val diffCallback = object : DiffUtil.ItemCallback<All_prod>(){
+        override fun areItemsTheSame(oldItem: All_prod, newItem: All_prod): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: Items, newItem: Items): Boolean {
+        override fun areContentsTheSame(oldItem: All_prod, newItem: All_prod): Boolean {
             return oldItem == newItem
         }
     }
     private val differ = AsyncListDiffer(this, diffCallback)
-    var prodList: List<Items>
+    var prodList: List<All_prod>
     get() = differ.currentList
     set(value) {differ.submitList(value)}
     //    tambahan belum paham
