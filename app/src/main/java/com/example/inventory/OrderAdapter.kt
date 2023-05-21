@@ -1,6 +1,7 @@
 package com.example.inventory
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
@@ -14,6 +15,7 @@ class OrderAdapter(): RecyclerView.Adapter<OrderAdapter.MyViewHolder>() {
 
     //    on click listener for each item
     private lateinit var mListener: onItemClickListener
+    private lateinit var mButtonListener: onButtonClickListener
 
     interface onItemClickListener {
 
@@ -24,6 +26,14 @@ class OrderAdapter(): RecyclerView.Adapter<OrderAdapter.MyViewHolder>() {
 
         mListener = listener
 
+    }
+
+    interface onButtonClickListener {
+        fun onButtonClick(position: Int)
+    }
+
+    fun setOnButtonClickListener(listener: onButtonClickListener) {
+        mButtonListener = listener
     }
     //    on click listener for each item
 
@@ -46,7 +56,7 @@ class OrderAdapter(): RecyclerView.Adapter<OrderAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding = OrderItemBinding.inflate(LayoutInflater.from(parent.context), parent,false)
-        return MyViewHolder(binding, mListener)
+        return MyViewHolder(binding, mListener, mButtonListener)
     }
 
     override fun getItemCount(): Int {
@@ -54,7 +64,7 @@ class OrderAdapter(): RecyclerView.Adapter<OrderAdapter.MyViewHolder>() {
     }
 
 
-    class MyViewHolder(private val binding: OrderItemBinding, listener: onItemClickListener): RecyclerView.ViewHolder(binding.root) {
+    class MyViewHolder(private val binding: OrderItemBinding, listener: onItemClickListener, buttonListener: onButtonClickListener): RecyclerView.ViewHolder(binding.root) {
 
         val thedate: TextView = binding.dateTextView
         val cusname: TextView = binding.customerNameTextView
@@ -65,8 +75,14 @@ class OrderAdapter(): RecyclerView.Adapter<OrderAdapter.MyViewHolder>() {
 
         //    on click listener for each item
         init{
+            // Set click listener for the item view
             itemView.setOnClickListener {
                 listener.onItemClick(adapterPosition)
+            }
+
+            // Set click listener for the button
+            statchange.setOnClickListener {
+                buttonListener.onButtonClick(adapterPosition)
             }
         }
         //    on click listener for each item
@@ -84,6 +100,12 @@ class OrderAdapter(): RecyclerView.Adapter<OrderAdapter.MyViewHolder>() {
         holder.totalqty.text = currentItem.total_qty.toString()
         holder.totalprice.text = currentItem.price.toString()
         holder.orderstat.text = currentItem.is_promo.toString()
+
+        if (currentItem.is_promo) {
+            holder.statchange.visibility = View.VISIBLE
+        } else {
+            holder.statchange.visibility = View.GONE
+        }
 
     }
 }

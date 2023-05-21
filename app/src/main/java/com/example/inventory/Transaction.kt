@@ -51,7 +51,12 @@ class Transaction : Fragment() {
         })
 
 
-        orderAdapter
+        orderAdapter.setOnButtonClickListener(object : OrderAdapter.onButtonClickListener{
+            override fun onButtonClick(position: Int) {
+                showConfirmationDialog(position)
+            }
+
+        })
     }
 
     private fun fetchOrder(){
@@ -66,7 +71,8 @@ class Transaction : Fragment() {
 
     private fun showConfirmationDialog(position: Int) {
 
-        val alertDialog = AlertDialog.Builder(requireContext())
+        if (orderAdapter.orderList[position].is_promo == true){
+            val alertDialog = AlertDialog.Builder(requireContext())
             .setTitle("Confirmation")
             .setMessage("Are you sure you want to change the status to 'canceled'?")
             .setPositiveButton("Yes") { dialog, _ ->
@@ -78,7 +84,10 @@ class Transaction : Fragment() {
             }
             .create()
 
-        alertDialog.show()
+            alertDialog.show()}
+
+
+
     }
 
     private fun changeOrderStatus(position: Int) {
