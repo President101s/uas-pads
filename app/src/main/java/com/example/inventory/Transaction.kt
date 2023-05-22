@@ -2,10 +2,13 @@ package com.example.inventory
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.inventory.databinding.FragmentTransactionBinding
@@ -17,6 +20,7 @@ class Transaction : Fragment() {
 
     private lateinit var binding: FragmentTransactionBinding
     private lateinit var orderAdapter: OrderAdapter
+    private val viewModel: TransactionViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,7 +37,13 @@ class Transaction : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
+
+        viewModel.orderList.observe(viewLifecycleOwner, Observer { orders ->
+            orderAdapter.orderList = orders
+        })
+
         fetchOrder()
+
     }
 
 
@@ -60,16 +70,11 @@ class Transaction : Fragment() {
     }
 
     private fun fetchOrder(){
-        viewLifecycleOwner.lifecycleScope.launch {
-            val response = RetrofitInstance.api.getOrder()
-
-            if (response.body() != null){
-                orderAdapter.orderList = response.body()!!
-            }
-        }
+        viewModel.fetchOrder()
     }
 
     private fun showConfirmationDialog(position: Int) {
+
 
         if (orderAdapter.orderList[position].is_promo == true){
             val alertDialog = AlertDialog.Builder(requireContext())
@@ -77,6 +82,8 @@ class Transaction : Fragment() {
             .setMessage("Are you sure you want to change the status to 'canceled'?")
             .setPositiveButton("Yes") { dialog, _ ->
                 changeOrderStatus(position)
+                Log.d("Transaction Fragment", "Pop Up")
+                viewModel.cancelOrder("salesA", orderAdapter.orderList[position].id)
                 dialog.dismiss()
             }
             .setNegativeButton("No") { dialog, _ ->
@@ -91,11 +98,14 @@ class Transaction : Fragment() {
     }
 
     private fun changeOrderStatus(position: Int) {
-        val order = orderAdapter.orderList[position]
-        order.is_promo = false
+        viewModel.changeOrderStatus(position)
 
         // Update the order in the adapter
         orderAdapter.notifyItemChanged(position)
     }
+
+
+
+
 
 }

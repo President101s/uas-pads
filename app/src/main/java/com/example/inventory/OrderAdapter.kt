@@ -38,18 +38,18 @@ class OrderAdapter(): RecyclerView.Adapter<OrderAdapter.MyViewHolder>() {
     //    on click listener for each item
 
 
-    private val diffCallback = object : DiffUtil.ItemCallback<OrderItem>(){
-        override fun areContentsTheSame(oldItem: OrderItem, newItem: OrderItem): Boolean {
+    private val diffCallback = object : DiffUtil.ItemCallback<OrderItem2>(){
+        override fun areContentsTheSame(oldItem: OrderItem2, newItem: OrderItem2): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areItemsTheSame(oldItem: OrderItem, newItem: OrderItem): Boolean {
+        override fun areItemsTheSame(oldItem: OrderItem2, newItem: OrderItem2): Boolean {
             return oldItem == newItem
         }
     }
 
     private val differ = AsyncListDiffer(this, diffCallback)
-    var orderList: List<OrderItem>
+    var orderList: List<OrderItem2>
     get() = differ.currentList
         set(value) {differ.submitList(value)}
 
@@ -83,6 +83,7 @@ class OrderAdapter(): RecyclerView.Adapter<OrderAdapter.MyViewHolder>() {
             // Set click listener for the button
             statchange.setOnClickListener {
                 buttonListener.onButtonClick(adapterPosition)
+
             }
         }
         //    on click listener for each item
