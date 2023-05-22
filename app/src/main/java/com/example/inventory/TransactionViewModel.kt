@@ -31,16 +31,6 @@ class TransactionViewModel : ViewModel() {
     }
 
 //    try cancel Order
-//    fun cancelOrder(order_id: PatchcancelorderRequest){
-//        viewModelScope.launch {
-//            val response = RetrofitInstance.api.patchOrder(order_id)
-//            if (response.isSuccessful) {
-//                fetchOrder()
-//            }
-//        }
-//
-//
-//    }
 fun cancelOrder(sales_uname: String = "salesA", order_id: Int) {
     Log.d("Transaction Fragment", "Cancel Order Kepanggil")
     val filetoPatch = PatchcancelorderRequest(sales_uname, order_id)
