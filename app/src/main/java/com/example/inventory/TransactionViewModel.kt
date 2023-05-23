@@ -8,8 +8,8 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 
 class TransactionViewModel : ViewModel() {
-    private val _orderList = MutableLiveData<List<OrderItem2>>()
-    val orderList: LiveData<List<OrderItem2>> get() = _orderList
+    private val _orderList = MutableLiveData<List<OrderItem>>()
+    val orderList: LiveData<List<OrderItem>> get() = _orderList
 
     fun fetchOrder() {
         viewModelScope.launch {
@@ -26,7 +26,7 @@ class TransactionViewModel : ViewModel() {
     fun changeOrderStatus(position: Int) {
         val orderListValue = _orderList.value.orEmpty().toMutableList()
         val order = orderListValue[position]
-        order.is_promo = false
+        order.status = "canceled"
         _orderList.value = orderListValue
     }
 

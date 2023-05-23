@@ -38,18 +38,18 @@ class OrderAdapter(): RecyclerView.Adapter<OrderAdapter.MyViewHolder>() {
     //    on click listener for each item
 
 
-    private val diffCallback = object : DiffUtil.ItemCallback<OrderItem2>(){
-        override fun areContentsTheSame(oldItem: OrderItem2, newItem: OrderItem2): Boolean {
+    private val diffCallback = object : DiffUtil.ItemCallback<OrderItem>(){
+        override fun areContentsTheSame(oldItem: OrderItem, newItem: OrderItem): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areItemsTheSame(oldItem: OrderItem2, newItem: OrderItem2): Boolean {
+        override fun areItemsTheSame(oldItem: OrderItem, newItem: OrderItem): Boolean {
             return oldItem == newItem
         }
     }
 
     private val differ = AsyncListDiffer(this, diffCallback)
-    var orderList: List<OrderItem2>
+    var orderList: List<OrderItem>
     get() = differ.currentList
         set(value) {differ.submitList(value)}
 
@@ -96,13 +96,13 @@ class OrderAdapter(): RecyclerView.Adapter<OrderAdapter.MyViewHolder>() {
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentItem = orderList[position]
 
-        holder.thedate.text = currentItem.id.toString()
-        holder.cusname.text = currentItem.name
-        holder.totalqty.text = currentItem.total_qty.toString()
-        holder.totalprice.text = currentItem.price.toString()
-        holder.orderstat.text = currentItem.is_promo.toString()
+        holder.thedate.text = currentItem.date
+        holder.cusname.text = currentItem.customer
+        holder.totalqty.text = currentItem.qty.toString()
+        holder.totalprice.text = currentItem.total_price.toString()
+        holder.orderstat.text = currentItem.status
 
-        if (currentItem.is_promo) {
+        if (currentItem.status == "active") {
             holder.statchange.visibility = View.VISIBLE
         } else {
             holder.statchange.visibility = View.GONE

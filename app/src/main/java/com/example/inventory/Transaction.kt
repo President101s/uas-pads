@@ -76,7 +76,7 @@ class Transaction : Fragment() {
     private fun showConfirmationDialog(position: Int) {
 
 
-        if (orderAdapter.orderList[position].is_promo == true){
+        if (orderAdapter.orderList[position].status == "active"){
             val alertDialog = AlertDialog.Builder(requireContext())
             .setTitle("Confirmation")
             .setMessage("Are you sure you want to change the status to 'canceled'?")

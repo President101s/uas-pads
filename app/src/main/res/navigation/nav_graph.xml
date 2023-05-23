@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/inventory">
+    app:startDestination="@id/login">
 
     <fragment
         android:id="@+id/inventory"
@@ -19,4 +19,25 @@
         android:name="com.example.inventory.Transaction"
         android:label="fragment_transaction"
         tools:layout="@layout/fragment_transaction" />
+    <fragment
+        android:id="@+id/login"
+        android:name="com.example.inventory.Login"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_login_to_inventory"
+            app:destination="@id/inventory" />
+        <action
+            android:id="@+id/action_login_to_signUp2"
+            app:destination="@id/signUp2" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUp2"
+        android:name="com.example.inventory.SignUp"
+        android:label="fragment_sign_up"
+        tools:layout="@layout/fragment_sign_up" >
+        <action
+            android:id="@+id/action_signUp2_to_login"
+            app:destination="@id/login" />
+    </fragment>
 </navigation>

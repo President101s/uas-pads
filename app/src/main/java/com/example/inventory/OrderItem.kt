@@ -2,14 +2,15 @@ package com.example.inventory
 
 import com.google.gson.annotations.SerializedName
 
+
 data class OrderItem(
-    val id : Int,
-    val date : String,
-    val status : String,
-    val total_price : Int,
-    val qty : Int,
-    val sales_id : String,
-    val customer_id : String
+    val customer: String,
+    val date: String,
+    val id: Int,
+    val image: String,
+    val qty: Int,
+    var status: String,
+    val total_price: Int
 )
 
 data class PatchcancelorderRequest(
@@ -21,3 +22,4 @@ data class ApiResponse(
     val message: String,
     val status: String
 )
+
