@@ -29,8 +29,6 @@ class Transaction : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentTransactionBinding.inflate(layoutInflater)
         val view = binding.root
-
-
         return view
     }
 

@@ -5,7 +5,6 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.PATCH
 import retrofit2.http.POST
-import retrofit2.http.Path
 
 interface Api {
 
@@ -22,6 +21,11 @@ interface Api {
 
     @POST("login")
     suspend fun postLogin(
-        @Body upass : LoginItem
+        @Body user_pass : LoginItem
     ):Response<LoginResponse>
+
+    @POST("register")
+    suspend fun postSignUp(
+        @Body regis_info : SignupItem
+    ):Response<SignupResponse>
 }
